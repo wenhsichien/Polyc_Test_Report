@@ -1,0 +1,61 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html><head>
+<meta content="text/html; charset=UTF8" http-equiv="content-type"><title>EC-500-400A RMA</title></head><body>
+<div style="text-align: center;">
+<h1><span style="font-weight: normal;">三角洲&nbsp;&nbsp; EC-500-400A 1号&nbsp; 运行2000小时出现故障分析报告</span><span style="text-decoration: underline;"> <br>
+</span></h1>
+</div>
+
+  
+
+<span style="color: rgb(0, 0, 0); font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; font-size: 18pt; font-family: &quot;Courier New&quot;,Courier,monospace;" lang="EN-US">测试者 : 吴国涛<o:p></o:p></span><span style="color: rgb(0, 0, 0); font-size: medium; font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; font-family: &quot;Courier New&quot;,Courier,monospace;"></span><br style="color: rgb(0, 0, 0); font-size: medium; font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; font-family: &quot;Courier New&quot;,Courier,monospace;">
+<span style="color: rgb(0, 0, 0); font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; font-size: 18pt; font-family: &quot;Courier New&quot;,Courier,monospace;" lang="EN-US">日期 : 2020-5-13<br>
+</span>
+<h1 style="font-weight: bold; text-decoration: underline;"><big><span style="color: rgb(0, 0, 0); font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; font-size: 18pt; font-family: &quot;Courier New&quot;,Courier,monospace;" lang="EN-US">2020-5-8</span></big></h1>
+<br>
+<img style="width: 133px; height: 221px;" src="../../../../../../../AppData/Local/Temp/moz-screenshot-7.jpg" alt=""><br>
+<br>
+<br>
+<h2><span style="color: rgb(0, 0, 0); font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; font-size: 18pt; font-family: &quot;Courier New&quot;,Courier,monospace;" lang="EN-US"></span></h2>
+<span style="color: rgb(0, 0, 0); font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; font-size: 18pt; font-family: &quot;Courier New&quot;,Courier,monospace;" lang="EN-US">现象 - 通电24V,马达启动5次，停机<br>
+分析 - 开机时，OCP检测为过流，保护，（验证，软件取消OCP功能，驱动正常，空载电流.18A）<br>
+<br>
+</span><img src="../../../../../../../AppData/Local/Temp/moz-screenshot.jpg" alt="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <img style="width: 490px; height: 350px;" alt="" src="../../../../../../1.png"><br>
+<br>
+<big><big><br>
+<span style="color: rgb(51, 51, 255);">OCP检测电路放到运放前的原因，许工的解释 </span></big></big><br>
+<big><br>
+<span style="color: red;">2019年1月左右設計這個板子，想要避免因為OPA不做動，導致過流保護也失效，所以直接用採樣
+電阻做將過流保護，那時程序忘記將放大倍率改回0倍，現在實際的保護電流是100A，如果客戶這案子有繼續要生產的打算，建議將OCP改回原本的OPA
+後，這樣程式也不需要修改。</span></big><br>
+<br>
+<span style="color: rgb(0, 0, 0); font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; font-size: 18pt; font-family: &quot;Courier New&quot;,Courier,monospace;" lang="EN-US">
+<span style="color: rgb(51, 51, 255);">产生OCP误动作的原因</span><br>
+<small style="color: red;"><br>
+启动时，干扰的毛刺很大，产出误动作，修改R6为1K,C16为1000p后，毛刺明显减小，不会产生误动作。</small><br>
+<br>
+<span style="color: rgb(51, 51, 255);">为什么老化2000小时后，才出现这个故障？</span><br>
+<br>
+<small style="color: red;">老化2000小时后，电机的参数有变化（比如电感量变小，启动时电流更大），引发OCP的检测电
+压更高，触发OCP的保护。在实验中，发现，空载启动时，瞬间电流可以达到24V/3A(正常后，空载电流为0.18A)。这个现象也是不太正常，我记得
+九龙的马达空载启动时，启动电流不太大（比如：正常电流是0.1A,启动电流大约为0.4A,不会超过1A）</small><br>
+<br>
+通过修改电路R6=1K,C16=1000p后，连续启动多次（30次以上），工作时间超过20小时。故障现象没有出现<br>
+<br>
+</span>
+<h1 style="font-weight: bold; text-decoration: underline;"><big><big><span style="color: rgb(0, 0, 0); font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; font-size: 18pt; font-family: &quot;Courier New&quot;,Courier,monospace;" lang="EN-US">2020-5-12</span></big></big></h1>
+<big><big>样机在老化过程中，5月12日下午下班时，<span style="color: red;">发现电源（24V/5A）出现过流保护</span></big></big><br>
+<br>
+<h1 style="font-weight: bold; text-decoration: underline;"><big><big><span style="color: rgb(0, 0, 0); font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; font-size: 18pt; font-family: &quot;Courier New&quot;,Courier,monospace;" lang="EN-US">2020-5-13</span></big></big></h1>
+
+<big><big>经过检测，发现C2(47u/35V VT SMD)短路，由于这个板子是梁工的手工焊接（最早的样板），这个电容是不知道品牌（图4的右边），我们正规小批量生产时，使用的是图4的左边MVT（金椒金富康提供）。更换电容后，样机正常，继续老化。<br>
+<br>
+</big></big><img src="../../../../../../../AppData/Local/Temp/moz-screenshot-3.jpg" alt=""><br>
+<img src="../../../../../../../AppData/Local/Temp/moz-screenshot-4.jpg" alt="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <img src="../../../../../../../AppData/Local/Temp/moz-screenshot-5.jpg" alt=""><br>
+<br>
+<img src="../../../../../../../AppData/Local/Temp/moz-screenshot-6.jpg" alt=""><br>
+<br>
+<br>
+
+<br>
+</body></html>
